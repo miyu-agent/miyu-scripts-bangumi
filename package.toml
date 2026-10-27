@@ -1,0 +1,6 @@
+[package]
+version = "0.1.0"
+name = { en = "Bangumi", zh = "番剧信息" }
+summary = { en = "Airing schedule, scores, progress and episodes from bgm.tv", zh = "番组计划（bgm.tv）的放送表、评分、播出进度和剧集" }
+author = "SHORiN-KiWATA"
+icon = "calendar"
