@@ -69,7 +69,7 @@ def request(path, body=None, params=None):
 
 def calendar():
     """The weekly schedule changes at most daily, so one copy per day is kept in the cache directory."""
-    cache_dir = os.environ.get("MIYU_SCRIPT_CACHE_DIR")
+    cache_dir = os.environ.get("MIYU_CACHE_DIR")
     today = dt.date.today().isoformat()
     path = os.path.join(cache_dir, f"calendar-{today}.json") if cache_dir else None
     if path and os.path.exists(path):
