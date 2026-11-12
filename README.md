@@ -1,4 +1,4 @@
-# 番剧信息（miyu-scripts-bangumi）
+# 番剧信息（bangumi）
 
 给 Miyu 的脚本工具 `bangumi`：查番组计划（bgm.tv）。
 
