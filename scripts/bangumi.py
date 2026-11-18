@@ -11,7 +11,7 @@
 #   "query": {"type": "string", "description": "A subject name (Chinese or original title) or a numeric bgm.tv subject id. A name opens the best match and lists the other candidates."},
 #   "weekday": {"type": "string", "description": "calendar: today (default), tomorrow, week, mon-sun, 1-7, or 周一-周日 / 一-日."},
 #   "type": {"type": "string", "enum": ["anime", "book", "game", "music", "real"], "description": "Subject type for search and name lookups. Default anime."},
-#   "limit": {"type": "integer", "description": "calendar: titles per day (default all); search: results (default 8, max 25); episodes: the last N up to the next one to air (default all)."},
+#   "limit": {"type": "integer", "description": "calendar: titles per day (default all); search: results (default 8, max 25); episodes: the last N up to the next one to air, or the first N for a show not yet airing (default all)."},
 #   "format": {"type": "string", "enum": ["md", "json"], "description": "md (default) for reading; json for code, e.g. piping miyu call into jq or python."}
 # }}
 import datetime as dt
@@ -280,7 +280,10 @@ def do_episodes(args, fmt, subject_type):
     limit = args.get("limit")
     today = dt.date.today().isoformat()
     # With a limit, show the window that ends at the next episode to air: that is what people ask about.
+    # A show that has not started airing has no such window yet, so it shows its first N instead.
     upto = next((i + 1 for i, e in enumerate(eps) if e.get("airdate") and e["airdate"] > today), len(eps))
+    if upto == 1 and limit:
+        upto = min(limit, len(eps))
     start = max(0, upto - limit) if limit else 0
     shown = eps[start:upto] if limit else eps
     if fmt == "json":
